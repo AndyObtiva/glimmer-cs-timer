@@ -29,7 +29,6 @@ module Glimmer
           display_about_dialog
         }
         on_preferences {
-          #display_preferences_dialog
           display_about_dialog
         }
       }
@@ -139,7 +138,6 @@ module Glimmer
             menu_item {
               text 'Preferences...'
               on_widget_selected {
-                #display_preferences_dialog
                 display_about_dialog
               }
             }
@@ -152,39 +150,6 @@ module Glimmer
       message_box(body_root) {
         text 'About'
         message "Glimmer - Timer #{VERSION}\n\n#{LICENSE}"
-      }.open
-    end
-    
-    def display_preferences_dialog
-      dialog(swt_widget) {
-        text 'Preferences'
-        grid_layout {
-          margin_height 5
-          margin_width 5
-        }
-        group {
-          row_layout {
-            type :vertical
-            spacing 10
-          }
-          text 'Greeting'
-          font style: :bold
-          [
-            'Hello, World!', 
-            'Howdy, Partner!'
-          ].each do |greeting_text|
-            button(:radio) {
-              text greeting_text
-              selection bind(self, :greeting) { |g| g == greeting_text }
-              layout_data {
-                width 160
-              }
-              on_widget_selected { |event|
-                self.greeting = event.widget.getText
-              }
-            }
-          end
-        }
       }.open
     end
     
