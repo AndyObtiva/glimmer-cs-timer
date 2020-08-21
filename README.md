@@ -13,7 +13,7 @@
 
 Glimmer Timer App and Custom Shell/Widget.
 
-Currently supports a coutndown timer only as a work in progress.
+Currently supports a countdown timer only.
 
 ## Platforms
 
