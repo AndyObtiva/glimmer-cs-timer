@@ -10,16 +10,20 @@
 <br>
 <br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;![glimmer-timer-screenshot-windows](glimmer-timer-screenshot-windows.png)
-
-Glimmer Timer App and Custom Shell/Widget.
+<br>
+Glimmer Timer is a sample desktop GUI application built with Glimmer (Ruby Desktop Development Library).
 
 Currently supports a countdown timer only.
+
+[<img src="https://raw.githubusercontent.com/AndyObtiva/glimmer-cs-timer/master/images/glimmer-timer-logo.png" height=40 /> Download Mac Version](https://www.dropbox.com/s/cfd0rsjfuy3gexe/Timer-1.0.0.dmg?dl=1)
+
+[<img src="https://raw.githubusercontent.com/AndyObtiva/glimmer-cs-timer/master/images/glimmer-timer-logo.png" height=40 /> Download Windows Version](https://www.dropbox.com/s/z0auecd44crkn2l/Timer-1.0.0.msi?dl=1)
 
 ## Platforms
 
 This has been tested and confirmed to be working on:
-- Mac
-- Windows
+- Mac: [Download DMG File](https://www.dropbox.com/s/cfd0rsjfuy3gexe/Timer-1.0.0.dmg?dl=1)
+- Windows: [Download MSI File](https://www.dropbox.com/s/z0auecd44crkn2l/Timer-1.0.0.msi?dl=1)
 
 ## Pre-requisites
 
