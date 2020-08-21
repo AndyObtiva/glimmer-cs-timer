@@ -15,19 +15,7 @@ module Glimmer
     # option :height, default: 240
     option :greeting, default: 'Hello, World!'
 
-    def play_countdown_done_sound
-      begin
-        file_path = File.expand_path(File.join('..', 'alarm1.wav'), __FILE__)
-        file = java.io.File.new(file_path)
-        audio_stream = AudioSystem.get_audio_input_stream(file)
-        clip = AudioSystem.clip
-        clip.open(audio_stream)
-        clip.start
-      rescue => e
-        pd e
-        puts e.full_message
-      end
-    end
+    attr_accessor :countdown, :min, :sec
 
     ## Use before_body block to pre-initialize variables to use in body
     #
@@ -44,22 +32,25 @@ module Glimmer
           display_about_dialog
         }
       }
+
+      @min = 0
+      @sec = 0
     }
 
     ## Use after_body block to setup observers for widgets in body
     #
     after_body {
-      @countdown_date_time_widget.swt_widget.setTime(0, 0, 0)
       Thread.new {
         loop {
           sleep(1)
           if @countdown
             sync_exec {
-              @countdown_time = Time.new(1, 1, 1, @countdown_date_time_widget.hours, @countdown_date_time_widget.minutes, @countdown_date_time_widget.seconds)
+              @countdown_time = Time.new(1, 1, 1, 0, min, sec)
               @countdown_time -= 1
-              @countdown_date_time_widget.swt_widget.setTime(@countdown_time.hour, @countdown_time.min, @countdown_time.sec) 
-              if @countdown_time.hour <= 0 && @countdown_time.min <= 0 && @countdown_time.sec <= 0
-                @countdown = false
+              self.min = @countdown_time.min
+              self.sec = @countdown_time.sec
+              if @countdown_time.min <= 0 && @countdown_time.sec <= 0
+                self.countdown = false
                 play_countdown_done_sound
               end
             }
@@ -74,22 +65,65 @@ module Glimmer
     body {
       shell {
         # Replace example content below with custom shell content
-        minimum_size 320, 240
+        minimum_size 200, 114
         image File.join(APP_ROOT, 'package', 'windows', "Timer.ico") if OS.windows?
         text "Glimmer - Timer"
         grid_layout
 
-        label {text 'Set Countdown:'}
-        @countdown_date_time_widget = date_time(:time) {
-          on_widget_default_selected {
-            @countdown = true
-          }
-        }
+        group {
+          text 'Countdown'
+          font height: 20
 
-        button {
-          text 'Start'
-          on_widget_selected {
-            @countdown = true
+          composite {
+            row_layout {
+              margin_width 0
+              margin_height 0
+            }
+            spinner {
+              text_limit 2
+              digits 0
+              maximum 60
+              selection bind(self, :min)
+              enabled bind(self, :countdown, on_read: :!)
+              on_widget_default_selected {
+                self.countdown = true
+              }
+            }
+            label {
+              text ':'
+              font height: 18
+            }
+            spinner {
+              text_limit 2
+              digits 0
+              maximum 60
+              selection bind(self, :sec)
+              enabled bind(self, :countdown, on_read: :!)
+              on_widget_default_selected {
+                self.countdown = true
+              }
+            }
+          }
+
+          composite {
+            row_layout {
+              margin_width 0
+              margin_height 0
+            }
+            button {
+              text '&Start'
+              enabled bind(self, :countdown, on_read: :!)
+              on_widget_selected {
+                self.countdown = true
+              }
+            }
+            button {
+              text 'St&op'
+              enabled bind(self, :countdown)
+              on_widget_selected {
+                self.countdown = false
+              }
+            }
           }
         }
         menu_bar {
@@ -146,5 +180,20 @@ module Glimmer
         }
       }.open
     end
+
+    def play_countdown_done_sound
+      begin
+        file_path = File.expand_path(File.join('..', 'alarm1.wav'), __FILE__)
+        file = java.io.File.new(file_path)
+        audio_stream = AudioSystem.get_audio_input_stream(file)
+        clip = AudioSystem.clip
+        clip.open(audio_stream)
+        clip.start
+      rescue => e
+        pd e
+        puts e.full_message
+      end
+    end
+
   end
 end
