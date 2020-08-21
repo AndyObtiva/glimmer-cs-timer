@@ -9,6 +9,7 @@ rescue Bundler::BundlerError => e
   $stderr.puts "Run `bundle install` to install missing gems"
   exit e.status_code
 end
+require 'glimmer/launcher'
 require 'rake'
 
 require 'jeweler'
@@ -21,6 +22,9 @@ Jeweler::Tasks.new do |gem|
   gem.description = %Q{Timer - Glimmer Custom Shell}
   gem.email = "andy.am@gmail.com"
   gem.authors = ["Andy Maleh"]
+  gem.files = Dir['VERSION', 'LICENSE.txt', 'lib/**/*', 'app/**/*', 'bin/**/*', 'vendor/**/*', 'package/**/*']
+  gem.executables = ['glimmer-cs-timer', 'timer']
+  gem.require_paths = ['vendor', 'lib', 'app']
   # dependencies defined in Gemfile
 end
 Jeweler::RubygemsDotOrgTasks.new
@@ -29,6 +33,7 @@ require 'rspec/core'
 require 'rspec/core/rake_task'
 RSpec::Core::RakeTask.new(:spec) do |spec|
   spec.pattern = FileList['spec/**/*_spec.rb']
+  spec.ruby_opts = [Glimmer::Launcher.jruby_swt_options]
 end
 
 desc "Code coverage detail"
@@ -48,3 +53,13 @@ Rake::RDocTask.new do |rdoc|
   rdoc.rdoc_files.include('README*')
   rdoc.rdoc_files.include('lib/**/*.rb')
 end
+
+require 'glimmer/rake_task'
+Glimmer::Package.javapackager_extra_args =
+  " -name 'Timer'" +
+  " -title 'Timer'" +
+  " -Bmac.CFBundleName='Timer'" +
+  " -Bmac.CFBundleIdentifier='org.glimmer.application.timer'" 
+  # " -BlicenseType=" +
+  # " -Bmac.category=" +
+  # " -Bmac.signing-key-developer-id-app="
