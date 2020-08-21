@@ -3,7 +3,7 @@
 
 ![glimmer-timer-screenshot](glimmer-timer-screenshot.png) 
 
-![glimmer-timer-screenshot-windows](glimmer-timer-screenshot-windows.png)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;![glimmer-timer-screenshot-windows](glimmer-timer-screenshot-windows.png)
 
 Glimmer Timer App and Custom Shell/Widget.
 
