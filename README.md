@@ -1,5 +1,7 @@
-# Glimmer Timer
+# Glimmer Timer 0.1.0
 ## [<img src="https://raw.githubusercontent.com/AndyObtiva/glimmer/master/images/glimmer-logo-hi-res.png" height=40 /> Glimmer Custom Shell](https://github.com/AndyObtiva/glimmer#custom-shell-gem)
+
+![glimmer-timer-screenshot](glimmer-timer-screenshot.png)
 
 Glimmer Timer App and Custom Shell/Widget.
 
