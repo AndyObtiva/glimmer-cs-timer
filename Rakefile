@@ -22,7 +22,7 @@ Jeweler::Tasks.new do |gem|
   gem.description = %Q{Timer - Glimmer Custom Shell}
   gem.email = "andy.am@gmail.com"
   gem.authors = ["Andy Maleh"]
-  gem.files = Dir['VERSION', 'LICENSE.txt', 'lib/**/*', 'app/**/*', 'bin/**/*', 'vendor/**/*', 'package/**/*']
+  gem.files = Dir['VERSION', 'LICENSE.txt', 'lib/**/*', 'app/**/*', 'bin/**/*', 'vendor/**/*', 'package/**/*', 'sounds/**/*', 'images/**/*']
   gem.executables = ['glimmer-cs-timer', 'timer']
   gem.require_paths = ['vendor', 'lib', 'app']
   # dependencies defined in Gemfile

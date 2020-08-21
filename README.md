@@ -7,6 +7,44 @@ Glimmer Timer App and Custom Shell/Widget.
 
 Currently supports a coutndown timer only as a work in progress.
 
+## Platforms
+
+This has been tested and confirmed to be working on:
+- Mac
+- Windows
+
+## Pre-requisites
+
+- [Glimmer](https://github.com/AndyObtiva/glimmer) application, [Glimmer](https://github.com/AndyObtiva/glimmer) custom shell, or another [Glimmer](https://github.com/AndyObtiva/glimmer) custom widget
+- JRuby version required by Glimmer
+- Java version required by Glimmer
+
+## Setup
+
+### Glimmer Application
+
+Add the following to a Glimmer application `Gemfile`:
+
+```ruby
+gem 'glimmer-cs-timer', '1.0.0'
+```
+
+Run:
+
+```
+jruby -S bundle
+```
+
+(or just `bundle` if using RVM)
+
+### Glimmer Custom Shell or Glimmer Custom Widget
+
+When reusing in a Glimmer custom shell or custom widget, you can follow the same steps for Glimmer application, and then add a require statement to your library file:
+
+```ruby
+require 'glimmer-cs-timer'
+# ... more require statements follow
+```
 ## Contributing to glimmer-cs-timer
  
 * Check out the latest master to make sure the feature hasn't been implemented or the bug hasn't been fixed yet.
