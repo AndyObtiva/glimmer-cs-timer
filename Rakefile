@@ -58,6 +58,7 @@ require 'glimmer/rake_task'
 Glimmer::Package.javapackager_extra_args =
   " -name 'Timer'" +
   " -title 'Timer'" +
+  " -Bwin.menuGroup='Timer'" +
   " -Bmac.CFBundleName='Timer'" +
   " -Bmac.CFBundleIdentifier='org.glimmer.application.timer'" 
   # " -BlicenseType=" +

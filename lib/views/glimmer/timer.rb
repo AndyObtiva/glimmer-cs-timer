@@ -65,9 +65,9 @@ module Glimmer
     body {
       shell {
         # Replace example content below with custom shell content
-        minimum_size 200, 114
+        minimum_size (OS.windows? ? 214 : 200), 114
         image File.join(APP_ROOT, 'package', 'windows', "Timer.ico") if OS.windows?
-        text "Glimmer - Timer"
+        text "Timer"
         grid_layout
 
         group {
@@ -91,7 +91,7 @@ module Glimmer
             }
             label {
               text ':'
-              font height: 18
+              font(height: 18) if OS.mac?
             }
             @sec_spinner = spinner {
               text_limit 2
