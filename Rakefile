@@ -19,7 +19,7 @@ Jeweler::Tasks.new do |gem|
   gem.homepage = "http://github.com/AndyObtiva/glimmer-cs-timer"
   gem.license = "MIT"
   gem.summary = %Q{Timer - Glimmer Custom Shell}
-  gem.description = %Q{Timer - Glimmer Custom Shell}
+  gem.description = %Q{Timer - Glimmer Custom Shell - Currently supports a countdown timer only}
   gem.email = "andy.am@gmail.com"
   gem.authors = ["Andy Maleh"]
   gem.files = Dir['VERSION', 'LICENSE.txt', 'lib/**/*', 'app/**/*', 'bin/**/*', 'vendor/**/*', 'package/**/*', 'sounds/**/*', 'images/**/*']
