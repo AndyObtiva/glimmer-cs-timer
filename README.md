@@ -27,11 +27,15 @@ This has been tested and confirmed to be working on:
 
 ## Pre-requisites
 
+If you would like to reuse as a library instead of a standalone application, here are the pre-requisites needed:
+
 - [Glimmer](https://github.com/AndyObtiva/glimmer) application, [Glimmer](https://github.com/AndyObtiva/glimmer) custom shell, or another [Glimmer](https://github.com/AndyObtiva/glimmer) custom widget
 - JRuby version required by Glimmer
 - Java version required by Glimmer
 
 ## Setup
+
+To setup for use in another [Glimmer](https://github.com/AndyObtiva/glimmer) application, [Glimmer](https://github.com/AndyObtiva/glimmer) custom shell, or another [Glimmer](https://github.com/AndyObtiva/glimmer) custom widget, follow the instructions below.
 
 ### Glimmer Application
 
