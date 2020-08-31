@@ -14,7 +14,6 @@ module Glimmer
     # options :title, :background_color
     # option :width, default: 320
     # option :height, default: 240
-    option :greeting, default: 'Hello, World!'
 
     attr_accessor :countdown, :min, :sec
 
