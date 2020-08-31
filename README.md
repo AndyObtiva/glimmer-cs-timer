@@ -10,6 +10,17 @@
 <br>
 <br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;![glimmer-timer-screenshot-windows](glimmer-timer-screenshot-windows.png)
+
+<br>
+<br>
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**Linux Version**
+<br>
+<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;![glimmer-timer-screenshot-linux](glimmer-timer-screenshot-linux.png)
+
 <br>
 Glimmer Timer is a sample desktop GUI application built with Glimmer (Ruby Desktop Development Library).
 
@@ -21,7 +32,7 @@ Currently supports a countdown timer only.
 
 ## Usage
 
-### Via Installer
+### App Installer
 
 Download and install the right installer for your platform:
 - [Mac DMG File](https://www.dropbox.com/s/cfd0rsjfuy3gexe/Timer-1.0.0.dmg?dl=1)
@@ -29,9 +40,9 @@ Download and install the right installer for your platform:
 
 Run by simply opening up the Timer application installed on your system.
 
-### Via Command
+### Command Gem
 
-Works on Mac and Linux.
+The `timer` command can be obtained from the [glimmer-cs-timer](https://rubygems.org/gems/glimmer-cs-timer) [JRuby](https://www.jruby.org/) gem and works on Mac and Linux:
 
 - Ensure [Glimmer pre-requisites](https://github.com/AndyObtiva/glimmer#pre-requisites)
 - `gem install glimmer-cs-timer` (if you don't have [RVM](https://rvm.io), then prefix with `jruby -S` or run `jgem` instead)
