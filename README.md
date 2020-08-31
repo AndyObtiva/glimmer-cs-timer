@@ -19,25 +19,39 @@ Currently supports a countdown timer only.
 
 [<img src="https://raw.githubusercontent.com/AndyObtiva/glimmer-cs-timer/master/images/glimmer-timer-logo.png" height=40 /> Download Windows Version](https://www.dropbox.com/s/z0auecd44crkn2l/Timer-1.0.0.msi?dl=1)
 
-## Platforms
+## Usage
 
-This has been tested and confirmed to be working on:
-- Mac: [Download DMG File](https://www.dropbox.com/s/cfd0rsjfuy3gexe/Timer-1.0.0.dmg?dl=1)
-- Windows: [Download MSI File](https://www.dropbox.com/s/z0auecd44crkn2l/Timer-1.0.0.msi?dl=1)
+### Via Installer
 
-## Pre-requisites
+Download and install the right installer for your platform:
+- [Mac DMG File](https://www.dropbox.com/s/cfd0rsjfuy3gexe/Timer-1.0.0.dmg?dl=1)
+- [Windows MSI File](https://www.dropbox.com/s/z0auecd44crkn2l/Timer-1.0.0.msi?dl=1)
+
+Run by simply opening up the Timer application installed on your system.
+
+### Via Command
+
+Works on Mac and Linux.
+
+- Ensure [Glimmer pre-requisites](https://github.com/AndyObtiva/glimmer#pre-requisites)
+- `gem install glimmer-cs-timer` (if you don't have [RVM](https://rvm.io), then prefix with `jruby -S` or run `jgem` instead)
+- `timer`
+
+## Development
+
+### Pre-requisites
 
 If you would like to reuse as a library instead of a standalone application, here are the pre-requisites needed:
 
 - [Glimmer](https://github.com/AndyObtiva/glimmer) application, [Glimmer](https://github.com/AndyObtiva/glimmer) custom shell, or another [Glimmer](https://github.com/AndyObtiva/glimmer) custom widget
-- JRuby version required by Glimmer
-- Java version required by Glimmer
+- JRuby version required by [Glimmer](https://github.com/AndyObtiva/glimmer)
+- Java version required by [Glimmer](https://github.com/AndyObtiva/glimmer)
 
-## Setup
+### Setup
 
 To setup for use in another [Glimmer](https://github.com/AndyObtiva/glimmer) application, [Glimmer](https://github.com/AndyObtiva/glimmer) custom shell, or another [Glimmer](https://github.com/AndyObtiva/glimmer) custom widget, follow the instructions below.
 
-### Glimmer Application
+#### Glimmer Application
 
 Add the following to a Glimmer application `Gemfile`:
 
@@ -53,7 +67,7 @@ jruby -S bundle
 
 (or just `bundle` if using RVM)
 
-### Glimmer Custom Shell or Glimmer Custom Widget
+#### Glimmer Custom Shell or Glimmer Custom Widget
 
 When reusing in a Glimmer custom shell or custom widget, you can follow the same steps for Glimmer application, and then add a require statement to your library file:
 
@@ -63,13 +77,16 @@ require 'glimmer-cs-timer'
 ```
 ## Contributing to glimmer-cs-timer
  
-* Check out the latest master to make sure the feature hasn't been implemented or the bug hasn't been fixed yet.
-* Check out the issue tracker to make sure someone already hasn't requested it and/or contributed it.
-* Fork the project.
-* Start a feature/bugfix branch.
-* Commit and push until you are happy with your contribution.
-* Make sure to add tests for it. This is important so I don't break it in a future version unintentionally.
-* Please try not to mess with the Rakefile, version, or history. If you want to have your own version, or is otherwise necessary, that is fine, but please isolate to its own commit so I can cherry-pick around it.
+- Check out the latest master to make sure the feature hasn't been implemented or the bug hasn't been fixed yet.
+- Check out the issue tracker to make sure someone already hasn't requested it and/or contributed it.
+- Fork the project.
+- Start a feature/bugfix branch.
+- Ensure [Glimmer pre-requisites](https://github.com/AndyObtiva/glimmer#pre-requisites)
+- `gem install bundler` (if you don't have [RVM](https://rvm.io), then prefix with `jruby -S` or run `jgem` instead)
+- `bundle`
+- Run app via `bin/timer` or `glimmer bin/glimmer-cs-timer` to ensure it works.
+- Commit and push until you are happy with your contribution.
+- If the changes include highly sophisticated pure model logic, then please cover it with [rspec](https://github.com/rspec/rspec) tests.
 
 ## Copyright
 
