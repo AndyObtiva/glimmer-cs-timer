@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+dir=`dirname $0`
+dir=`realpath $dir`
+echo $dir
+glimmer $dir/glimmer-cs-timer-service &
+glimmer $dir/glimmer-cs-timer

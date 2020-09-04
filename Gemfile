@@ -4,7 +4,7 @@ source 'https://rubygems.org'
 
 git_source(:github) {|repo_name| "https://github.com/#{repo_name}" }
 
-gem 'glimmer-dsl-swt', '~> 0.6.2'
+gem 'glimmer-dsl-swt', '~> 0.6.4'
 
 group :development do
   gem 'rspec', '~> 3.5.0'

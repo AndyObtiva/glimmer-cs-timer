@@ -1,0 +1,105 @@
+#!/usr/bin/env ruby
+
+require_relative '../lib/glimmer-cs-timer'
+require 'puts_debuggerer'
+
+include Glimmer
+
+# TODO if the app has just been launched from the client (not just as a service), then display shell right away without hiding first
+
+class App
+  include Glimmer
+  
+  attr_reader :app_shell
+
+  def initialize(app_shell)
+    pd "Initialize app with #{app_shell}"
+    @app_shell = app_shell
+  end
+
+  def open
+    pd "#open"
+    Thread.new {
+      async_exec {
+        @app_shell.set_alpha(255)
+        @app_shell.visible = true
+        @app_shell.set_active
+        @app_shell.set_focus
+      }
+    }
+  end
+  
+  def close
+    pd "#close"
+    Thread.new {
+      async_exec {
+        @app_shell.visible = false
+      }
+    }
+  end
+  
+  def method_missing(method, *args, &block)
+    pd method, args, block, announcer: ['METHOD_MISSING'], caller: 5
+    result = nil
+    Thread.new {
+      async_exec {
+        begin
+          result = @app_shell&.send(method, *args, &block)
+        rescue => e
+          pd e
+          result = nil
+        end      
+      }
+    }
+    while result.nil?
+      sleep(0.01)      
+    end
+    result      
+  end
+  
+  def respond_to?(method, *args, &block)
+    pd method, args, block, announcer: ['RESPOND_TO?']
+    result = nil
+    Thread.new {
+      async_exec {
+        begin
+          result = @app_shell&.respond_to?(method, *args, &block)
+        rescue => e
+          pd e
+          result = nil
+        end      
+      }
+    }
+    while result.nil?
+      sleep(0.01)      
+    end
+    result  
+  end
+    
+  # TODO
+  # Implement an event to observe for when the launcher is closed 
+  # so the client would close too to avoid the icon from staying active
+end
+
+# TODO consider hiding app on close (preventing a real close) and if a close or crash does happen, it restarts
+pd app_shell = timer {
+  alpha 0 # make invisible so user doesn't see it's preloaded
+}
+launcher = App.new(app_shell)
+pd 'Built app launcher'
+
+Thread.new {
+  async_exec {
+    pd 'Hiding app shell'
+    app_shell.hide
+    require 'drb/drb'
+
+    pd 'Starting druby://127.0.0.1:12345 server'
+    DRb.start_service("druby://127.0.0.1:12345", launcher)
+    #pd 'joining thread'
+    #DRb.thread.join
+  }
+}
+
+pd 'Opening app shell for the first time'
+app_shell.open
