@@ -1,71 +1,44 @@
-#!/usr/bin/env ruby
-
-require_relative '../lib/glimmer-cs-timer'
 require 'puts_debuggerer'
+require_relative '../lib/glimmer-cs-timer'
 
 include Glimmer
 
 # TODO if the app has just been launched from the client (not just as a service), then display shell right away without hiding first
 
-class App
+# Asynchronous multi-threaded Glimmer SWT proxy that
+# enables druby interactions while an app is running
+module Glimmer::SWT::AsyncProxy
   include Glimmer
+  attr_reader :proxy
   
-  attr_reader :app_shell
-
-  def initialize(app_shell)
-    pd "Initialize app with #{app_shell}"
-    @app_shell = app_shell
-  end
-
-  def open
-    pd "#open"
-    Thread.new {
-      async_exec {
-        @app_shell.set_alpha(255)
-        @app_shell.visible = true
-        @app_shell.set_active
-        @app_shell.set_focus
-      }
-    }
+  def initialize(proxy)
+    @proxy = proxy
   end
   
-  def close
-    pd "#close"
-    Thread.new {
-      async_exec {
-        @app_shell.visible = false
-      }
-    }
+  def heartbeat
+    @heartbeat = Time.now.utc
   end
   
-  def method_missing(method, *args, &block)
-    pd method, args, block, announcer: ['METHOD_MISSING'], caller: 5
-    result = nil
+  def async(&operation)
     Thread.new {
       async_exec {
         begin
-          result = @app_shell&.send(method, *args, &block)
+          operation.call
         rescue => e
-          pd e
-          result = nil
+          Glimmer::Config.logger e.full_message
         end      
       }
     }
-    while result.nil?
-      sleep(0.01)      
-    end
-    result      
-  end
+  end  
   
-  def respond_to?(method, *args, &block)
-    pd method, args, block, announcer: ['RESPOND_TO?']
+  def async_await(&operation)
     result = nil
     Thread.new {
       async_exec {
         begin
-          result = @app_shell&.respond_to?(method, *args, &block)
+          result = operation.call
         rescue => e
-          pd e
+          Glimmer::Config.logger e.full_message
           result = nil
         end      
       }
@@ -74,32 +47,73 @@ class App
       sleep(0.01)      
     end
     result  
-  end
-    
-  # TODO
-  # Implement an event to observe for when the launcher is closed 
-  # so the client would close too to avoid the icon from staying active
+  end  
 end
 
-# TODO consider hiding app on close (preventing a real close) and if a close or crash does happen, it restarts
-pd app_shell = timer {
+class Glimmer::SWT::AsyncShellProxy
+  include Glimmer::SWT::AsyncProxy
+
+  def open
+    async {
+      @open = true
+      @proxy.swt_widget.set_alpha(255)
+      @proxy.visible = true
+      @proxy.swt_widget.set_active
+      @proxy.swt_widget.set_focus
+    }
+    Thread.new {
+      until !@open || (@heartbeat && (Time.now.utc - @heartbeat) > 1)
+        sleep(1)
+      end    
+      async_exec {
+        close if @open && (@heartbeat && (Time.now.utc - @heartbeat) > 1)
+      }
+    }
+  end
+  
+  def close
+    async {
+      if @open
+        @open = false
+        @heartbeat = nil
+        @proxy.visible = false
+      end
+    }
+  end
+  
+  def method_missing(method, *args, &block)
+    async_await {
+      @proxy&.send(method, *args, &block)
+    }
+  end
+  
+  def respond_to?(method, *args, &block)
+    async_await {
+      @proxy&.respond_to?(method, *args, &block)
+    }
+  end
+end
+
+  
+app_shell = timer { |proxy|
   alpha 0 # make invisible so user doesn't see it's preloaded
+  on_shell_closed { |event|
+    event.doit = false # preventing real closing (just hide instead)
+    proxy.visible = false
+  }
 }
-launcher = App.new(app_shell)
-pd 'Built app launcher'
+launcher = Glimmer::SWT::AsyncShellProxy.new(app_shell)
 
 Thread.new {
   async_exec {
-    pd 'Hiding app shell'
     app_shell.hide
     require 'drb/drb'
 
-    pd 'Starting druby://127.0.0.1:12345 server'
     DRb.start_service("druby://127.0.0.1:12345", launcher)
-    #pd 'joining thread'
-    #DRb.thread.join
+    puts 'Service is ready.'
   }
 }
 
-pd 'Opening app shell for the first time'
 app_shell.open
+app_shell.dispose
+DRb.stop_service
