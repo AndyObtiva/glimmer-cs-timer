@@ -1,60 +1,109 @@
-require 'drb/drb'
+require 'logging'
+require 'glimmer/config'
+require 'ext/glimmer/config'
+require 'fileutils'
 
-there = nil
-
-at_exit {
-  puts "Exiting"
-  there.close
-}
-
-until there
-  begin
-    there = DRbObject.new_with_uri('druby://127.0.0.1:12345')
-    puts "There: #{there}"
-  rescue DRb::DRbConnError => e
-    puts '>>DRb::DRbConnError'
-    puts e.full_message
-    puts 'sleeping'
-    sleep(0.5)
-    there = nil
-  end  
-end
-puts "Connected There: #{there}"
-there.open
-begin
-  sleep(0.1)
-  opened = nil
-  begin
-    opened = there.visible?
-  rescue DRb::DRbConnError => e
-    puts 'server down'
-    puts e.full_message
-    exit(1)
+module Glimmer
+  class Timer
+    class Client
+      include Glimmer
+      
+      SERVER_SCRIPT_FILE = File.expand_path('../../../../../bin/glimmer-cs-timer-server', __FILE__)
+      
+      attr_reader :async_app_shell
+      
+      def initialize
+        at_exit {
+          Glimmer::Config.logger.info "Exiting"
+          async_app_shell&.close
+          Glimmer::Config.logger.info "Sent request to async_app_shell.close"
+          Glimmer::Config.logger.appenders.each(&:flush)          
+        }      
+      end
+      
+      def server_running?
+        !!(`ps aux`.split("\n").detect { |line| line.include?('glimmer-cs-timer-server') } )
+      end
+      
+      def start
+        require 'drb/drb'
+        started_server = false
+        while async_app_shell.nil?
+          begin
+            @async_app_shell = DRbObject.new_with_uri('druby://127.0.0.1:12345')
+            async_app_shell.heartbeat
+            Glimmer::Config.logger.info "Connected: #{async_app_shell}"
+            Glimmer::Config.logger.appenders.each(&:flush)          
+          rescue StandardError, DRb::DRbConnError => e
+            @async_app_shell = nil
+            Glimmer::Config.logger.debug "Failed to connect. #{e.message}. Retrying..."
+            unless started_server || server_running?            
+              if File.exist?('glimmer-cs-timer.jar')
+                system "GLIMMER_APP_LAUNCHER=server GLIMMER_LOGGER_LEVEL=#{Logging::LEVELS.invert[Glimmer::Config.logger.level]} java -XstartOnFirstThread -jar glimmer-cs-timer.jar &" 
+              else
+                system "glimmer --log-level=#{Logging::LEVELS.invert[Glimmer::Config.logger.level]} #{SERVER_SCRIPT_FILE} &" 
+              end
+              started_server = true
+            end
+            sleep(0.05)
+          end
+        end
+        
+        async_app_shell.open
+        Glimmer::Config.logger.info "Sent request to async_app_shell.open"
+        Glimmer::Config.logger.appenders.each(&:flush)          
+        
+        opened = nil
+        opened_heartbeat = 0
+        until opened || opened_heartbeat == 100
+          unless opened.nil?
+            sleep(0.05)
+            async_app_shell.heartbeat
+            opened_heartbeat += 1
+          end
+          begin
+            opened = async_app_shell.visible?
+          rescue StandardError, DRb::DRbConnError => e    
+            Glimmer::Config.logger.debug "Encountered error while checking app visible status. #{e.message}. Retrying..."
+            opened = false
+          end  
+        end
+        
+        Glimmer::Config.logger.info "App is visible."
+        Glimmer::Config.logger.appenders.each(&:flush)         
+        open
+      end
+      
+      def open
+        require 'glimmer-dsl-swt'
+        # build a make shift shell just to have the mac bouncing icon stop bouncing when GUI shows up
+        shell { |proxy|
+          alpha 0
+          on_swt_show {
+            Thread.new {
+              begin
+                sleep(0.05)
+                async_app_shell.heartbeat
+                closed = nil
+                begin
+                  closed = !async_app_shell.visible?
+                rescue DRb::DRbConnError => e    
+                  closed = true
+                end
+              end until closed  
+              Glimmer::Config.logger.info "App closed from service."
+              Glimmer::Config.logger.appenders.each(&:flush)
+              async_exec {
+                proxy.swt_widget.close
+              }
+            }
+          }
+          on_shell_closed {
+            Glimmer::Config.logger.info "App closed from client."
+            Glimmer::Config.logger.appenders.each(&:flush)              
+          }
+        }.open      
+      end
+    end
   end
-  puts "there.opened? #{opened}"
-end until opened
-puts 'Opened? true'
-
-# build a make shift shell just to have the mac bouncing icon stop bouncing when GUI shows up
-require 'glimmer-dsl-swt'
-include Glimmer
-shell { |proxy|
-  alpha 0
-  on_swt_show {
-    loop {
-      sleep(0.1)
-      closed = nil
-      begin
-        closed = there.visible.nil? || !there.visible?
-      rescue DRb::DRbConnError => e
-        puts e.full_message
-        closed = true
-      end
-      if closed
-        puts "there.closed? true"
-        proxy.swt_widget.close      
-      end
-    }
-  }
-}.open
-# TODO observe server object for closing and close icon when that happens 
+end

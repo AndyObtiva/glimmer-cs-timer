@@ -32,6 +32,7 @@ module Glimmer
       end  
       
       def start
+        # TODO support a way to shut down (like via file touch)
         Thread.new {
           async_exec {
             app_shell.hide

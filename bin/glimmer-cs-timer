@@ -1,6 +1,12 @@
 #!/usr/bin/env ruby
 
-$LOAD_PATH.unshift(File.expand_path('../../lib', __FILE__))
-
-require 'launcher/glimmer/timer/service'
-Glimmer::Timer::Service.new.start
+if ENV['GLIMMER_APP_LAUNCHER'] == 'server'
+  load File.expand_path('../glimmer-cs-timer-server', __FILE__)
+else
+  lib_path = File.expand_path('../../lib', __FILE__)
+  $LOAD_PATH.unshift(lib_path) unless $LOAD_PATH.include?(lib_path)
+  
+  require 'launcher/glimmer/timer/client'
+  
+  Glimmer::Timer::Client.new.start
+end
