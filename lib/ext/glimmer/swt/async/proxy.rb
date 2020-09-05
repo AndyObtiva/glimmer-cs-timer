@@ -13,7 +13,10 @@ module Glimmer
         end
         
         def heartbeat
-          @heartbeat = Time.now.utc
+          Time.now.utc.tap do |time|
+            @heartbeat = time
+            Glimmer::Config.logger.debug "Heartbeat from client at: #{time}"
+          end
         end
         
       end

@@ -14,11 +14,19 @@ module Glimmer
       attr_reader :app_shell
       
       def initialize
+        first_time = true
         @app_shell = timer { |proxy|
           alpha 0 # make invisible so user doesn't see it's preloaded
           on_shell_closed { |event|
             event.doit = false # preventing real closing (just hide instead)
             proxy.visible = false
+          }
+          on_swt_show { |event|
+            if first_time
+              Glimmer::Config.logger.info "App GUI is ready for display."
+              Glimmer::Config.logger.appenders.each(&:flush)          
+              first_time = false
+            end
           }
         }  
       end  
@@ -31,8 +39,10 @@ module Glimmer
         
             async_app_shell = Glimmer::SWT::Async::ShellProxy.new(app_shell) # needed for DRB
             # TODO make sure to select an available port randomly to support having multiple apps
-            DRb.start_service("druby://127.0.0.1:12345", async_app_shell)
-            puts 'Service is ready.'
+            service_uri = 'druby://127.0.0.1:12345'
+            DRb.start_service(service_uri, async_app_shell)
+            Glimmer::Config.logger.info "App Service is ready for client connection at: #{service_uri}"
+            Glimmer::Config.logger.appenders.each(&:flush)            
           }
         }  
         app_shell.open # must happen on first thread since it contains GUI

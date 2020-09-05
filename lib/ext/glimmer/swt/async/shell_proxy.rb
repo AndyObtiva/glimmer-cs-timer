@@ -7,6 +7,8 @@ module Glimmer
         include Glimmer::SWT::Async::Proxy
       
         def open
+          Glimmer::Config.logger.info 'Received a client request to Glimmer::SWT::Async::ShellProxy#open'
+          Glimmer::Config.logger.appenders.each(&:flush)          
           async {
             @open = true
             @proxy.swt_widget.set_alpha(255)
@@ -25,6 +27,8 @@ module Glimmer
         end
         
         def close
+          Glimmer::Config.logger.info 'Received a client request to Glimmer::SWT::Async::ShellProxy#close'
+          Glimmer::Config.logger.appenders.each(&:flush)          
           async {
             if @open
               @open = false
