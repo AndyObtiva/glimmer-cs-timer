@@ -3,6 +3,8 @@ require 'glimmer/config'
 require 'ext/glimmer/config'
 require 'fileutils'
 
+# Glimmer::Config.logger.error org.eclipse.swt.internal.cocoa.NSBundle.bundle_with_identifier(org.eclipse.swt.internal.cocoa.NSString.stringWith 'org.glimmer.application.timer')
+
 module Glimmer
   class Timer
     class Client
@@ -18,7 +20,7 @@ module Glimmer
           async_app_shell&.close
           Glimmer::Config.logger.info "Sent request to async_app_shell.close"
           Glimmer::Config.logger.appenders.each(&:flush)          
-        }      
+        }              
       end
       
       def server_running?
@@ -31,7 +33,7 @@ module Glimmer
         while async_app_shell.nil?
           begin
             @async_app_shell = DRbObject.new_with_uri('druby://127.0.0.1:12345')
-            async_app_shell.heartbeat
+            Glimmer::Config.logger.debug async_app_shell.heartbeat
             Glimmer::Config.logger.info "Connected: #{async_app_shell}"
             Glimmer::Config.logger.appenders.each(&:flush)          
           rescue StandardError, DRb::DRbConnError => e
@@ -58,7 +60,7 @@ module Glimmer
         until opened || opened_heartbeat == 100
           unless opened.nil?
             sleep(0.05)
-            async_app_shell.heartbeat
+            Glimmer::Config.logger.debug async_app_shell.heartbeat
             opened_heartbeat += 1
           end
           begin
@@ -82,19 +84,20 @@ module Glimmer
           on_swt_show {
             @close_monitoring_thread ||= Thread.new {
               begin
-                sleep(0.05)
-                async_app_shell.heartbeat
+                sleep(0.1)
                 closed = nil
-                begin
+                begin                  
+                  Glimmer::Config.logger.debug async_app_shell.heartbeat
                   closed = !async_app_shell.visible?
-                rescue DRb::DRbConnError => e    
+                rescue StandardError, DRb::DRbConnError => e    
+                  Glimmer::Config.logger.debug e.full_message
                   closed = true
                 end
               end until closed  
               Glimmer::Config.logger.info "App closed from service."
               Glimmer::Config.logger.appenders.each(&:flush)
               async_exec {
-                proxy.swt_widget.close
+                proxy.swt_widget.close unless proxy.swt_widget.disposed?
               }
             }
           }

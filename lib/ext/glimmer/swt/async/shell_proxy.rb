@@ -15,7 +15,6 @@ module Glimmer
             @open = true
             @proxy.swt_widget.set_alpha(255)
             @proxy.visible = true
-            @proxy.swt_widget.force_active unless proxy.display.active_shell == proxy.swt_widget
           }
           @close_monitoring_thread ||= Thread.new {
             until closed? || heartbeat_delay_exceeds_max?
