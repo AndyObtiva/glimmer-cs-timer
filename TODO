@@ -1,0 +1,7 @@
++ Make server window come to front when launching client (force it if not working)
++ Make tabbing to a client window show the server window immediately
+- Make minimizing client window minimize server window
+- Make maximizing client window max serve window
+- Make interacting with client menu trigger server menu
+- Contribute client-server app type to `glimmer scaffold`
+- Contribute client-server app type to `glimmer scaffold:gem:cs`

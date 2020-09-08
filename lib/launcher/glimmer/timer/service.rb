@@ -35,7 +35,7 @@ module Glimmer
         # TODO support a way to shut down (like via file touch)
         Thread.new {
           async_exec {
-            app_shell.hide
+            app_shell.hide unless app_shell.swt_widget.alpha > 0
             require 'drb/drb'
         
             async_app_shell = Glimmer::SWT::Async::ShellProxy.new(app_shell) # needed for DRB

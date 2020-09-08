@@ -80,7 +80,7 @@ module Glimmer
         shell { |proxy|
           alpha 0
           on_swt_show {
-            Thread.new {
+            @close_monitoring_thread ||= Thread.new {
               begin
                 sleep(0.05)
                 async_app_shell.heartbeat
@@ -97,6 +97,17 @@ module Glimmer
                 proxy.swt_widget.close
               }
             }
+          }
+          on_shell_activated {
+            async_exec {
+              closed = nil
+              begin
+                closed = !async_app_shell.visible?
+              rescue DRb::DRbConnError => e    
+                closed = true
+              end              
+              async_app_shell.force_active unless proxy.swt_widget.disposed? || closed
+            }            
           }
           on_shell_closed {
             Glimmer::Config.logger.info "App closed from client."
