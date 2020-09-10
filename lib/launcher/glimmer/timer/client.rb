@@ -3,8 +3,6 @@ require 'glimmer/config'
 require 'ext/glimmer/config'
 require 'fileutils'
 
-# Glimmer::Config.logger.error org.eclipse.swt.internal.cocoa.NSBundle.bundle_with_identifier(org.eclipse.swt.internal.cocoa.NSString.stringWith 'org.glimmer.application.timer')
-
 module Glimmer
   class Timer
     class Client
@@ -41,7 +39,7 @@ module Glimmer
             Glimmer::Config.logger.debug "Failed to connect. #{e.message}. Retrying..."
             unless started_server || server_running?            
               if File.exist?('glimmer-cs-timer.jar')
-                system "GLIMMER_APP_LAUNCHER=server GLIMMER_LOGGER_LEVEL=#{Logging::LEVELS.invert[Glimmer::Config.logger.level]} java -XstartOnFirstThread -jar glimmer-cs-timer.jar &" 
+                system "GLIMMER_LOGGER_LEVEL=#{Logging::LEVELS.invert[Glimmer::Config.logger.level]} open -b org.glimmer.application.timer.Server &" 
               else
                 system "glimmer --log-level=#{Logging::LEVELS.invert[Glimmer::Config.logger.level]} #{SERVER_SCRIPT_FILE} &" 
               end

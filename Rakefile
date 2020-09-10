@@ -23,6 +23,7 @@ Jeweler::Tasks.new do |gem|
   gem.email = "andy.am@gmail.com"
   gem.authors = ["Andy Maleh"]
   gem.files = Dir['VERSION', 'LICENSE.txt', 'lib/**/*', 'app/**/*', 'bin/**/*', 'vendor/**/*', 'package/**/*', 'sounds/**/*', 'images/**/*']
+#   gem.executables = ['glimmer-cs-timer-server', 'glimmer-cs-timer', 'timer']
   gem.executables = ['glimmer-cs-timer', 'timer']
   gem.require_paths = ['vendor', 'lib', 'app']
   # dependencies defined in Gemfile
@@ -56,11 +57,16 @@ end
 
 require 'glimmer/rake_task'
 Glimmer::Package.javapackager_extra_args =
+  " -BjvmOptions='-Xmx128m' " +
   " -name 'Timer'" +
+#   " -name 'Timer Server'" +
   " -title 'Timer'" +
-  " -Bwin.menuGroup='Timer'" +
+#   " -title 'Timer Server'" +
+#   " -Bwin.menuGroup='Timer'" +
   " -Bmac.CFBundleName='Timer'" +
+#   " -Bmac.CFBundleName='Timer Server'" +
   " -Bmac.CFBundleIdentifier='org.glimmer.application.timer'" 
+  " -Bmac.CFBundleIdentifier='org.glimmer.application.timer.server'" 
   # " -BlicenseType=" +
   # " -Bmac.category=" +
   # " -Bmac.signing-key-developer-id-app="

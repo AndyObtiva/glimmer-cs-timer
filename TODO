@@ -1,7 +1,11 @@
 + Make server window come to front when launching client (force it if not working)
 + Make tabbing to a client window show the server window immediately
 + Make client close when server closes (through reverse heartbeat)
-- Hide dock icon for server app
++ Hide dock icon for server app
+- Package server app as part of client app
+- Make CMD+Tabbing into server app automatically bring client app to front as active
+- Trap CMD+Q shortcut in server app to avoid having it close on the Mac
+- When quitting server app and it looping to restart, close client app in between
 - Make minimizing client window minimize server window
 - Make maximizing client window max serve window
 - Make interacting with client menu trigger server menu

@@ -5,4 +5,4 @@ $LOAD_PATH.unshift(lib_path) unless $LOAD_PATH.include?(lib_path)
 
 require 'launcher/glimmer/timer/service'
 
-Glimmer::Timer::Service.new.start
+loop { Glimmer::Timer::Service.new.start }

@@ -26,6 +26,7 @@ module Glimmer
               Glimmer::Config.logger.info "App GUI is ready for display."
               Glimmer::Config.logger.appenders.each(&:flush)          
               first_time = false
+              #   set LSUIElement to false
             end
           }
         }  

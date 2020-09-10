@@ -2,6 +2,6 @@
 
 require 'glimmer/launcher'
 
-runner = File.expand_path("../timer-runner", __FILE__)
+runner = File.expand_path("../glimmer-cs-timer-standard", __FILE__)
 launcher = Glimmer::Launcher.new([runner] + ARGV)
 launcher.launch
