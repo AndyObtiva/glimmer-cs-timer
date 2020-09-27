@@ -22,7 +22,7 @@ Jeweler::Tasks.new do |gem|
   gem.description = %Q{Timer - Glimmer Custom Shell - Currently supports a countdown timer only}
   gem.email = "andy.am@gmail.com"
   gem.authors = ["Andy Maleh"]
-  gem.files = Dir['VERSION', 'LICENSE.txt', 'lib/**/*', 'app/**/*', 'bin/**/*', 'vendor/**/*', 'package/**/*', 'sounds/**/*', 'images/**/*']
+  gem.files = Dir['VERSION', 'LICENSE.txt', 'CHANGELOG.md', 'README.md', 'glimmer-cs-timer.gemspec', 'lib/**/*', 'app/**/*', 'bin/**/*', 'vendor/**/*', 'package/**/*', 'sounds/**/*', 'images/**/*']
   gem.executables = ['glimmer-cs-timer', 'timer']
   gem.require_paths = ['vendor', 'lib', 'app']
   # dependencies defined in Gemfile
@@ -33,7 +33,7 @@ require 'rspec/core'
 require 'rspec/core/rake_task'
 RSpec::Core::RakeTask.new(:spec) do |spec|
   spec.pattern = FileList['spec/**/*_spec.rb']
-  spec.ruby_opts = [Glimmer::Launcher.jruby_swt_options]
+  spec.ruby_opts = [Glimmer::Launcher. jruby_os_specific_options]
 end
 
 desc "Code coverage detail"
@@ -55,7 +55,7 @@ Rake::RDocTask.new do |rdoc|
 end
 
 require 'glimmer/rake_task'
-Glimmer::Package.javapackager_extra_args =
+Glimmer::RakeTask::Package.javapackager_extra_args =
   " -name 'Timer'" +
   " -title 'Timer'" +
   " -Bwin.menuGroup='Timer'" +

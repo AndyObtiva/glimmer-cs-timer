@@ -1,5 +1,5 @@
 # <img src="https://raw.githubusercontent.com/AndyObtiva/glimmer-cs-timer/master/images/glimmer-timer-logo.png" height=80 /> Glimmer Timer
-## [<img src="https://raw.githubusercontent.com/AndyObtiva/glimmer/master/images/glimmer-logo-hi-res.png" height=40 /> Glimmer Custom Shell](https://github.com/AndyObtiva/glimmer#custom-shell-gem)
+## [<img src="https://raw.githubusercontent.com/AndyObtiva/glimmer/master/images/glimmer-logo-hi-res.png" height=40 /> Glimmer Custom Shell](https://github.com/AndyObtiva/glimmer-dsl-swt#custom-shell-gem)
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**Mac Version**
 
@@ -22,21 +22,21 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;![glimmer-timer-screenshot-linux](glimmer-timer-screenshot-linux.png)
 
 <br>
-Glimmer Timer is a sample desktop GUI application built with Glimmer (Ruby Desktop Development Library).
+Glimmer Timer is a sample desktop GUI application built with Glimmer (JRuby Desktop Development GUI Library).
 
 Currently supports a countdown timer only.
 
-[<img src="https://raw.githubusercontent.com/AndyObtiva/glimmer-cs-timer/master/images/glimmer-timer-logo.png" height=40 /> Download Mac Version](https://www.dropbox.com/s/cfd0rsjfuy3gexe/Timer-1.0.0.dmg?dl=1)
+[<img src="https://raw.githubusercontent.com/AndyObtiva/glimmer-cs-timer/master/images/glimmer-timer-logo.png" height=40 /> Download Mac Version](https://www.dropbox.com/s/t9q2znziupgqmt2/Timer-1.1.0.dmg?dl=1)
 
-[<img src="https://raw.githubusercontent.com/AndyObtiva/glimmer-cs-timer/master/images/glimmer-timer-logo.png" height=40 /> Download Windows Version](https://www.dropbox.com/s/z0auecd44crkn2l/Timer-1.0.0.msi?dl=1)
+[<img src="https://raw.githubusercontent.com/AndyObtiva/glimmer-cs-timer/master/images/glimmer-timer-logo.png" height=40 /> Download Windows Version](https://www.dropbox.com/s/f0epkjarz4l1u5a/Timer-1.1.0.msi?dl=1)
 
 ## Usage
 
 ### App Installer
 
 Download and install the right installer for your platform:
-- [Mac DMG File](https://www.dropbox.com/s/cfd0rsjfuy3gexe/Timer-1.0.0.dmg?dl=1)
-- [Windows MSI File](https://www.dropbox.com/s/z0auecd44crkn2l/Timer-1.0.0.msi?dl=1)
+- [Mac DMG File](https://www.dropbox.com/s/t9q2znziupgqmt2/Timer-1.1.0.dmg?dl=1)
+- [Windows MSI File](https://www.dropbox.com/s/f0epkjarz4l1u5a/Timer-1.1.0.msi?dl=1)
 
 Run by simply opening up the Timer application installed on your system.
 
@@ -44,7 +44,7 @@ Run by simply opening up the Timer application installed on your system.
 
 The `timer` command can be obtained from the [glimmer-cs-timer](https://rubygems.org/gems/glimmer-cs-timer) [JRuby](https://www.jruby.org/) gem and works on Mac and Linux:
 
-- Ensure [Glimmer pre-requisites](https://github.com/AndyObtiva/glimmer#pre-requisites)
+- Ensure [Glimmer pre-requisites](https://github.com/AndyObtiva/glimmer-dsl-swt#pre-requisites)
 - `gem install glimmer-cs-timer` (if you don't have [RVM](https://rvm.io), then prefix with `jruby -S` or run `jgem` instead)
 - `timer`
 
@@ -54,20 +54,20 @@ The `timer` command can be obtained from the [glimmer-cs-timer](https://rubygems
 
 If you would like to reuse as a library instead of a standalone application, here are the pre-requisites needed:
 
-- [Glimmer](https://github.com/AndyObtiva/glimmer) application, [Glimmer](https://github.com/AndyObtiva/glimmer) custom shell, or another [Glimmer](https://github.com/AndyObtiva/glimmer) custom widget
-- JRuby version required by [Glimmer](https://github.com/AndyObtiva/glimmer)
-- Java version required by [Glimmer](https://github.com/AndyObtiva/glimmer)
+- [Glimmer DSL for SWT](https://github.com/AndyObtiva/glimmer-dsl-swt) application, [Glimmer](https://github.com/AndyObtiva/glimmer-dsl-swt) custom shell, or another [Glimmer](https://github.com/AndyObtiva/glimmer-dsl-swt) custom widget
+- JRuby version required by [Glimmer](https://github.com/AndyObtiva/glimmer-dsl-swt)
+- Java version required by [Glimmer](https://github.com/AndyObtiva/glimmer-dsl-swt)
 
 ### Setup
 
-To setup for use in another [Glimmer](https://github.com/AndyObtiva/glimmer) application, [Glimmer](https://github.com/AndyObtiva/glimmer) custom shell, or another [Glimmer](https://github.com/AndyObtiva/glimmer) custom widget, follow the instructions below.
+To setup for use in another [Glimmer](https://github.com/AndyObtiva/glimmer-dsl-swt) application, [Glimmer](https://github.com/AndyObtiva/glimmer-dsl-swt) custom shell, or another [Glimmer](https://github.com/AndyObtiva/glimmer-dsl-swt) custom widget, follow the instructions below.
 
 #### Glimmer Application
 
 Add the following to a Glimmer application `Gemfile`:
 
 ```ruby
-gem 'glimmer-cs-timer', '1.0.0'
+gem 'glimmer-cs-timer', '1.1.0'
 ```
 
 Run:
@@ -86,13 +86,18 @@ When reusing in a Glimmer custom shell or custom widget, you can follow the same
 require 'glimmer-cs-timer'
 # ... more require statements follow
 ```
+
+## Change Log
+
+[CHANGELOG.md](CHANGELOG.md)
+
 ## Contributing to glimmer-cs-timer
  
 - Check out the latest master to make sure the feature hasn't been implemented or the bug hasn't been fixed yet.
 - Check out the issue tracker to make sure someone already hasn't requested it and/or contributed it.
 - Fork the project.
 - Start a feature/bugfix branch.
-- Ensure [Glimmer pre-requisites](https://github.com/AndyObtiva/glimmer#pre-requisites)
+- Ensure [Glimmer pre-requisites](https://github.com/AndyObtiva/glimmer-dsl-swt#pre-requisites)
 - `gem install bundler` (if you don't have [RVM](https://rvm.io), then prefix with `jruby -S` or run `jgem` instead)
 - `bundle`
 - Run app via `bin/timer` or `glimmer bin/glimmer-cs-timer` to ensure it works.
@@ -107,6 +112,6 @@ Copyright (c) 2020 Andy Maleh.
 
 --
 
-[<img src="https://raw.githubusercontent.com/AndyObtiva/glimmer/master/images/glimmer-logo-hi-res.png" height=40 />](https://github.com/AndyObtiva/glimmer) Built with [Glimmer](https://github.com/AndyObtiva/glimmer) (Ruby Desktop Development GUI Library)
+[<img src="https://raw.githubusercontent.com/AndyObtiva/glimmer/master/images/glimmer-logo-hi-res.png" height=40 />](https://github.com/AndyObtiva/glimmer) Built with [Glimmer DSL for SWT](https://github.com/AndyObtiva/glimmer-dsl-swt) (JRuby Desktop Development GUI Library)
 
 Icon made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a>
