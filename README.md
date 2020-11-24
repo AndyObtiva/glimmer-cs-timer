@@ -48,6 +48,10 @@ The `timer` command can be obtained from the [glimmer-cs-timer](https://rubygems
 - `gem install glimmer-cs-timer` (if you don't have [RVM](https://rvm.io), then prefix with `jruby -S` or run `jgem` instead)
 - `timer`
 
+## Tutorial
+
+[How To Write a Glimmer Timer Desktop App in One Hour](https://andymaleh.blogspot.com/2020/08/writing-glimmer-timer-sample-app-in.html)
+
 ## Development
 
 ### Pre-requisites
