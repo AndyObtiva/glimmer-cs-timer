@@ -1,9 +1,9 @@
 # <img src="https://raw.githubusercontent.com/AndyObtiva/glimmer-cs-timer/master/images/glimmer-timer-logo.png" height=80 /> Glimmer Timer
-## [<img src="https://raw.githubusercontent.com/AndyObtiva/glimmer/master/images/glimmer-logo-hi-res.png" height=40 /> Glimmer Custom Shell](https://github.com/AndyObtiva/glimmer-dsl-swt#custom-shell-gem)
+## [<img src="https://raw.githubusercontent.com/AndyObtiva/glimmer-dsl-swt/master/images/glimmer-logo-hi-res.png" height=40 /> Glimmer Custom Shell](https://github.com/AndyObtiva/glimmer-dsl-swt/blob/master/docs/reference/GLIMMER_COMMAND.md#custom-shell-gem)
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**Mac Version**
 
-![glimmer-timer-screenshot](glimmer-timer-screenshot.png) 
+![glimmer-timer-screenshot](glimmer-timer-screenshot.png)
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**Windows Version**
 <br>
@@ -24,9 +24,9 @@
 <br>
 Glimmer Timer is a sample desktop GUI application built with Glimmer (JRuby Desktop Development GUI Library).
 
-Currently supports a countdown timer only.
+It supports a countdown timer.
 
-[<img src="https://raw.githubusercontent.com/AndyObtiva/glimmer-cs-timer/master/images/glimmer-timer-logo.png" height=40 /> Download Mac Version](https://www.dropbox.com/s/t9q2znziupgqmt2/Timer-1.1.0.dmg?dl=1)
+[<img src="https://raw.githubusercontent.com/AndyObtiva/glimmer-cs-timer/master/images/glimmer-timer-logo.png" height=40 /> Download Mac Version](https://www.dropbox.com/s/37da66bd2qk4djf/Timer-1.2.0.dmg?dl=1)
 
 [<img src="https://raw.githubusercontent.com/AndyObtiva/glimmer-cs-timer/master/images/glimmer-timer-logo.png" height=40 /> Download Windows Version](https://www.dropbox.com/s/f0epkjarz4l1u5a/Timer-1.1.0.msi?dl=1)
 
@@ -35,14 +35,15 @@ Currently supports a countdown timer only.
 ### App Installer
 
 Download and install the right installer for your platform:
-- [Mac DMG File](https://www.dropbox.com/s/t9q2znziupgqmt2/Timer-1.1.0.dmg?dl=1)
-- [Windows MSI File](https://www.dropbox.com/s/f0epkjarz4l1u5a/Timer-1.1.0.msi?dl=1)
+- [Mac DMG File](https://www.dropbox.com/s/37da66bd2qk4djf/Timer-1.2.0.dmg?dl=1) (Big Sur and Older)
+- [Windows MSI File](https://www.dropbox.com/s/f0epkjarz4l1u5a/Timer-1.1.0.msi?dl=1) (Windows 10)
+- [Linux GEM File](https://rubygems.org/gems/glimmer-cs-timer) (All Linux Versions compatible with [SWT's use of GTK](https://www.eclipse.org/swt/faq.php))
 
 Run by simply opening up the Timer application installed on your system.
 
 ### Command Gem
 
-The `timer` command can be obtained from the [glimmer-cs-timer](https://rubygems.org/gems/glimmer-cs-timer) [JRuby](https://www.jruby.org/) gem and works on Mac and Linux:
+The `timer` command can be obtained from the [glimmer-cs-timer](https://rubygems.org/gems/glimmer-cs-timer) [JRuby](https://www.jruby.org/) gem and works on Mac, Windows and Linux:
 
 - Ensure [Glimmer pre-requisites](https://github.com/AndyObtiva/glimmer-dsl-swt#pre-requisites)
 - `gem install glimmer-cs-timer` (if you don't have [RVM](https://rvm.io), then prefix with `jruby -S` or run `jgem` instead)
@@ -71,7 +72,7 @@ To setup for use in another [Glimmer](https://github.com/AndyObtiva/glimmer-dsl-
 Add the following to a Glimmer application `Gemfile`:
 
 ```ruby
-gem 'glimmer-cs-timer', '1.1.0'
+gem 'glimmer-cs-timer', '1.2.0'
 ```
 
 Run:
@@ -112,10 +113,10 @@ require 'glimmer-cs-timer'
 
 [MIT](https://opensource.org/licenses/MIT)
 
-Copyright (c) 2020 Andy Maleh.
+Copyright (c) 2020-2021 Andy Maleh.
 
 --
 
-[<img src="https://raw.githubusercontent.com/AndyObtiva/glimmer/master/images/glimmer-logo-hi-res.png" height=40 />](https://github.com/AndyObtiva/glimmer) Built with [Glimmer DSL for SWT](https://github.com/AndyObtiva/glimmer-dsl-swt) (JRuby Desktop Development GUI Library)
+[<img src="https://raw.githubusercontent.com/AndyObtiva/glimmer/master/images/glimmer-logo-hi-res.png" height=40 />](https://github.com/AndyObtiva/glimmer) Built with [Glimmer DSL for SWT](https://github.com/AndyObtiva/glimmer-dsl-swt) (JRuby Desktop Development GUI Framework)
 
 Icon made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a>

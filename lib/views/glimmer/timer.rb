@@ -8,6 +8,7 @@ module Glimmer
     VERSION = File.read(File.join(APP_ROOT, 'VERSION'))
     LICENSE = File.read(File.join(APP_ROOT, 'LICENSE.txt'))
     FILE_SOUND_ALARM = File.join(APP_ROOT, 'sounds', 'alarm1.wav')
+    COMMAND_KEY = OS.mac? ? :command : :ctrl
         
     ## Add options like the following to configure CustomShell by outside consumers
     #
@@ -81,7 +82,7 @@ module Glimmer
             @min_spinner = spinner {
               text_limit 2
               digits 0
-              maximum 60
+              maximum 59
               selection bind(self, :min)
               enabled bind(self, :countdown, on_read: :!)
               on_widget_default_selected {
@@ -95,7 +96,7 @@ module Glimmer
             @sec_spinner = spinner {
               text_limit 2
               digits 0
-              maximum 60
+              maximum 59
               selection bind(self, :sec)
               enabled bind(self, :countdown, on_read: :!)
               on_widget_default_selected {
@@ -133,9 +134,45 @@ module Glimmer
         }
         menu_bar {
           menu {
-            text '&File'
+            text '&Action'
+            
             menu_item {
-              text 'Preferences...'
+              text '&Start'
+              accelerator COMMAND_KEY, 's'
+              enabled bind(self, :countdown, on_read: :!)
+              
+              on_widget_selected {
+                start_countdown
+              }
+            }
+            menu_item {
+              text 'St&op'
+              enabled bind(self, :countdown)
+              accelerator COMMAND_KEY, 'o'
+              
+              on_widget_selected {
+                stop_countdown
+              }
+            }
+            unless OS.mac?
+              menu_item(:separator)
+              menu_item {
+                text 'E&xit'
+                accelerator :alt, :f4
+                
+                on_widget_selected {
+                  exit(0)
+                }
+              }
+            end
+          }
+          menu {
+            text '&Help'
+                        
+            menu_item {
+              text '&About'
+              accelerator COMMAND_KEY, :shift, 'a'
+              
               on_widget_selected {
                 display_about_dialog
               }
@@ -154,7 +191,7 @@ module Glimmer
     
     def start_countdown
       self.countdown = true
-      @stop_button.swt_widget.set_focus    
+      @stop_button.swt_widget.set_focus
     end
 
     def stop_countdown
@@ -168,8 +205,8 @@ module Glimmer
           jar_file_path = FILE_SOUND_ALARM
           file_path = jar_file_path.sub(/^uri\:classloader\:/, '').sub('//', '/') # the latter sub is needed for Mac
           object = java.lang.Object.new
-          file_input_stream = object.java_class.resource_as_stream(file_path)          
-          file_or_stream = java.io.BufferedInputStream.new(file_input_stream)      
+          file_input_stream = object.java_class.resource_as_stream(file_path)
+          file_or_stream = java.io.BufferedInputStream.new(file_input_stream)
         else
           file_or_stream = java.io.File.new(FILE_SOUND_ALARM)
         end
@@ -178,7 +215,6 @@ module Glimmer
         clip.open(audio_stream)
         clip.start
       rescue => e
-        pd e
         puts e.full_message
       end
     end
